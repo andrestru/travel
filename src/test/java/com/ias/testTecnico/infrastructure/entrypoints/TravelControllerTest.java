@@ -4,12 +4,14 @@ import com.ias.testTecnico.domain.usecase.TravelUseCase.SearchTravelUseCase;
 import com.ias.testTecnico.domain.usecase.reserveUseCase.ReserveUseCase;
 import com.ias.testTecnico.domain.usecase.ticketUseCase.TicketUseCase;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureWebMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -18,6 +20,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = TravelController.class)
 @AutoConfigureMockMvc
 @AutoConfigureWebMvc
+
 class TravelControllerTest {
 
     @MockBean
@@ -32,6 +35,7 @@ class TravelControllerTest {
     @MockBean
     private SearchTravelUseCase travelUseCase;
 
+    @MockBean
     MockMvc mockMvc;
 
     @Test
@@ -40,13 +44,15 @@ class TravelControllerTest {
     }
 
     @Test
-    void search(){
+    void search() throws Exception {
 
-        RequestBuilder requestBuilder = RequestBui.get("/airline/travel");
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/airline/travel");
 
-        mockMvc.perform()
+        mockMvc.perform(requestBuilder)
         .andExpect(status().isOk())
         .andExpect(content().string("Service is running"));
+
+
     }
 
 }
